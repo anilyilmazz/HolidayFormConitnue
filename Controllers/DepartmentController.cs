@@ -14,7 +14,6 @@ namespace IzinFormu.Controllers
     {
         private UserManager<ApplicationUser> _usermanager;
         private ApplicationDbContext _ctx;
-        private RoleManager<IdentityRole> _rolemanager;
 
         public DepartmentController(ApplicationDbContext _ctx, UserManager<ApplicationUser> _usermanager)
         {
@@ -32,7 +31,7 @@ namespace IzinFormu.Controllers
             //{
             //    return Content("Bu Departmana Bakamazsınız");
             //}
-            ViewBag.Id = departman.Id;
+           // ViewBag.Id = departman.Id;
             return View();
         }
         public JsonResult GetsDepartment(int Id)
@@ -42,6 +41,22 @@ namespace IzinFormu.Controllers
             return Json(alldepartmanuserlist);
         }
 
+        public IActionResult AddUser()
+        {
+            ViewBag.users = _ctx.Users.ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddUser(RegisterViewModel model,int Id) {
+
+            var editinguser = _ctx.Users.SingleOrDefault(a => a.Name==model.Name);
+            if (editinguser != null)
+            {
+                editinguser.Department = _ctx.Departman.Where(s => s.Id == Id).Select(s => new DepartmanViewModel() { DepartmentName = s.DepartmanName }).ToList()[0].DepartmentName;
+                _ctx.SaveChanges();
+            }
+            return RedirectToAction("Index", "Department");
+        }
 
 
     }
