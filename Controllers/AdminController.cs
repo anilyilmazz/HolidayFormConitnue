@@ -27,8 +27,6 @@ namespace IzinFormu.Controllers
             this._rolemanager = _rolemanager;
             this._ctx = _ctx;
         }
-
-
         public IActionResult Index()
         {
 
@@ -36,24 +34,28 @@ namespace IzinFormu.Controllers
             return View();
         }
 
+        //USER METHODS
+
         public IActionResult UserRegister(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.departments = _ctx.Departman.ToList();
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> UserRegister(RegisterViewModel model,string returnurl = null)
         {
             ViewData["ReturnUrl"] = returnurl;
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Name = model.Name,Department=model.Department ,Manager=model.Manager,CreateDate=model.CreateDate};
             var result = await _usermanager.CreateAsync(user, model.Password);
-            return View();
+            return RedirectToAction("UserIndex", "Admin");
         }
         public IActionResult UserIndex()
         {      
             return View(_ctx.Users.ToList());
         }
+
+        //ADMIN HOLIDAY METHODS
 
         public IActionResult HolidayIndex()
         {
@@ -84,11 +86,25 @@ namespace IzinFormu.Controllers
             return Json(allholidaylist);
         }
 
+        //DEPARTMENT METHODS
+
         [Authorize]
         public IActionResult DepartmentCreate()
         {
             ViewBag.users = _ctx.Users.ToList();
             return View();
+        }
+        [Authorize]
+        public void MakeManager(ApplicationUser user)
+        {
+            IdentityRole role = _rolemanager.FindByNameAsync("DepartmentManager").Result;
+            if (role == null)
+            {
+                var result = _rolemanager.CreateAsync(new IdentityRole("DepartmentManager")).Result;
+                role = _rolemanager.FindByNameAsync("DepartmentManager").Result;
+            }
+            var userroleresult = _usermanager.AddToRoleAsync(user, "DepartmentManager").Result;
+
         }
 
         [Authorize]
@@ -98,13 +114,11 @@ namespace IzinFormu.Controllers
             var Departman = new Departman(); ;
             Departman.DepartmanName = model.DepartmentName;
             Departman.Manager = _ctx.Users.Where(a => a.Email == model.ManagerMail).FirstOrDefault();
+            MakeManager(Departman.Manager);
             _ctx.Departman.Add(Departman);
             _ctx.SaveChanges();
-
-
             return RedirectToAction("DepartmentIndex", "Admin");
         }
-
         public IActionResult DepartmentIndex()
         {
             return View();
@@ -114,7 +128,6 @@ namespace IzinFormu.Controllers
             var alldepartmanlist = _ctx.Departman.Select(s => new DepartmanViewModel() { DepartmentName = s.DepartmanName, ManagerMail = s.Manager.Email,Id=s.Id });
             return Json(alldepartmanlist);
         }
-
         [Authorize]
         public IActionResult DepartmentDelete(int Id)
         {
@@ -134,18 +147,20 @@ namespace IzinFormu.Controllers
 
             return View();
         }
-
         [HttpPost]
         [Authorize]
         public IActionResult DepartmentEdit(DepartmanViewModel model, int Id)
         {
+            
             var editingdepartment = _ctx.Departman.SingleOrDefault(a => a.Id == Id);
             if (editingdepartment != null)
             {
                 editingdepartment.DepartmanName = model.DepartmentName;
                 editingdepartment.Manager = _ctx.Users.Where(a => a.Email == model.ManagerMail).FirstOrDefault();
+                MakeManager(editingdepartment.Manager);
                 _ctx.SaveChanges();
             }
+           
             return RedirectToAction("DepartmentIndex", "Admin");
         }
     }

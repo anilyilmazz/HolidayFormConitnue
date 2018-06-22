@@ -10,8 +10,16 @@
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                    <input type="button" class="btn btn-link navbar-btn navbar-link" value="Izin Islemleri" onclick="window.location.href='@Url.Action("Index","Holiday")'" />
+                <input type="button" class="btn btn-link navbar-btn navbar-link" value="Izin Islemleri" onclick="window.location.href='@Url.Action("Index","Holiday")'" />
             </li>
+
+            @if (User.IsInRole("DepartmentManager"))
+    {
+            <li>
+                <input type="button" class="btn btn-link navbar-btn navbar-link" value="Departman Islemleri" onclick="window.location.href='@Url.Action("Index","Holiday")'" />
+            </li>
+
+}
 
             @if (User.IsInRole("Admin"))
     {
