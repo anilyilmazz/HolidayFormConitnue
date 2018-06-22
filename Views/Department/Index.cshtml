@@ -7,11 +7,12 @@
 <h2>Departman Üyeleri</h2>
 
 <div class="container">
-    <a class="btn btn-default" href="@Url.Action("AddUser","Department",new { id=1007 })" style="float:right;">İzin Olustur</a>
+    <a class="btn btn-default" href="@Url.Action("AddUser","Department",new { id=1007 })" style="float:right;">Kullanıcı Ekle</a>
     <table class="table table-bordered" id="example">
         <thead>
             <tr>
                 <th>İsim</th>
+                <th>Yönetim</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -32,6 +33,15 @@
             },
             "columns": [
                 { "data": "name" },
+                {
+                  "title": "Kaldır",
+                    "data": "email",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("DeleteUser", "Department")?email=' + veri + '">Departmandan Sil</a>';},
+                },
             ]
         });
     });

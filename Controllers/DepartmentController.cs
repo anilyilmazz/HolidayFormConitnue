@@ -37,7 +37,7 @@ namespace IzinFormu.Controllers
         public JsonResult GetsDepartment(int Id)
         {
             var departmentname = _ctx.Departman.Where(s => s.Id == Id).Select(s => new DepartmanViewModel() { DepartmentName = s.DepartmanName }).ToList();           
-            var alldepartmanuserlist = _ctx.Users.Where(s => s.Department == departmentname[0].DepartmentName).Select(s=>new RegisterViewModel() { Name=s.Name});
+            var alldepartmanuserlist = _ctx.Users.Where(s => s.Department == departmentname[0].DepartmentName).Select(s=>new RegisterViewModel() { Name=s.Name , Email=s.Email});
             return Json(alldepartmanuserlist);
         }
 
@@ -57,6 +57,15 @@ namespace IzinFormu.Controllers
             }
             return RedirectToAction("Index", "Department");
         }
+
+        public IActionResult DeleteUser(string Email)
+        {
+            var editinguser = _ctx.Users.SingleOrDefault(a => a.Email == Email);
+            editinguser.Department = "Departmanı Yok";
+            _ctx.SaveChanges();
+            return RedirectToAction("Index", "Department");
+        }
+
 
 
     }
