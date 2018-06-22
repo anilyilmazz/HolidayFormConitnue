@@ -4,7 +4,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Departman Üyeleri</h2>
 
-DEPARTMANIMA AİT KULLANCILAR
+<div class="container">
+    <a class="btn btn-default" href="@Url.Action("HolidayRegister","Holiday")" style="float:right;">İzin Olustur</a>
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>İsim</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    function pdfcreate() {
+        alert("Pdf Oluşturuldu.")
 
+    }
+
+
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "Department/GetsDepartment/1007",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "name" },
+            ]
+        });
+    });
+
+</script> 

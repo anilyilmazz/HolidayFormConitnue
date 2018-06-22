@@ -47,6 +47,9 @@ namespace IzinFormu.Controllers
         {
             ViewData["ReturnUrl"] = returnurl;
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email,Name = model.Name,Department=model.Department ,Manager=model.Manager,CreateDate=model.CreateDate};
+            var gecici = _ctx.Departman.Where(s => s.DepartmanName == model.Department).Select(s=> new DepartmanViewModel() { Id=s.Id, DepartmentName =s.DepartmanName.ToString(),ManagerId = s.Manager.ToString()}).FirstOrDefault();
+            var managername = _ctx.Users.Where(s => s.Email == gecici.ManagerId).FirstOrDefault();
+            user.Manager = managername.Name.ToString();
             var result = await _usermanager.CreateAsync(user, model.Password);
             return RedirectToAction("UserIndex", "Admin");
         }
