@@ -1,0 +1,46 @@
+﻿@model IzinFormu.Models.HolidayViewModel
+@{
+    ViewData["Title"] = "İzin Oluştur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" onsubmit="return datecontrol()">
+            <h4>İzin Oluştur</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input type="date" asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <input type="date" asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">İzin Oluştur</button>
+        </form>
+    </div>
+</div>
+<script>
+    function datecontrol() {
+        var startdate = document.getElementById("StartDate").value;
+        var enddate = document.getElementById("EndDate").value;
+        if (startdate > enddate) {
+            alert("İzin Bitiş Tarihi Daha Önce Olamaz");
+            return false;
+        } else {
+            alert("İzin Başarı İle Oluşturuldu");
+            window.location.assign("/Holiday")
+        }
+    }
+</script>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

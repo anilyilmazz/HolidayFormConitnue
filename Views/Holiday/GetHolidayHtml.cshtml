@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>İZİN BELGESİ</title>
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 90%;
+    }
+
+    table, td, th {
+        border: 1px solid black;
+    }
+</style>
+
+<body onload="window.print();">
+
+    <header style="color:black;">
+        <center> <h1>İZİN TALEP FORMU</h1></center>
+        <hr />
+    </header>
+    <main>
+        @foreach (var item in Model)
+        {
+
+            <h3>Tarih :  @item.RequestDate </h3>
+            <h3>Departman :@item.Department</h3>
+            <h3>Yönetici İsmi : @item.Manager</h3>
+            <h3>İlgili Yıl : @item.RequestDate.Year.ToString()</h3>
+
+            <table class="border">
+                <tr>
+                    <th>Personel</th>
+                    <th>İşe Giriş Tarihi</th>
+                    <th>İzin Başlangıç Tarihi</th>
+                    <th>İzin Bitiş Tarihi</th>
+                    <th>Onay 1</th>
+                    <th>Onay 2</th>
+                    <th>Onay 3</th>
+                </tr>
+                <tr>
+                    <td>@item.User</td>
+                    <td>@item.CreateDateString</td>
+                    <td>@item.StartDateString</td>
+                    <td>@item.EndDateString</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </table>
+
+        }
+    </main>
+</body>
+</html>

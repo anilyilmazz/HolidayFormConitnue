@@ -1,0 +1,32 @@
+﻿@model DepartmanViewModel
+@{
+    ViewData["Title"] = "Departman Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <br />           
+            <h4>Departman Düzenle</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DepartmentName"></label>
+                <input type="text" asp-for="DepartmentName" class="form-control" value="@ViewBag.departmanname" />
+                <span asp-validation-for="DepartmentName" class="text-danger"></span>
+            </div>
+            <label asp-for="ManagerMail"></label>
+            <select asp-for="ManagerMail" class="form-control" id="sel1"   value="@ViewBag.managermail">
+                @foreach (var item in ViewBag.users)
+                {
+                    <option>@item.Email</option>
+                }
+            </select>
+            <br />
+            <span asp-validation-for="ManagerMail" class="text-danger"></span>
+            <button type="submit" class="btn btn-default">Departmanı Düzenle</button>
+        </form>
+    </div>
+</div>

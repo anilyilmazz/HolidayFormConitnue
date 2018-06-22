@@ -1,0 +1,20 @@
+﻿@model IzinFormu.Models.AccountViewModels.ExternalLoginViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin Index Page</h2>
+
+<table>
+
+    @foreach (var item in Model.Email)
+    {
+        <tr>
+            <td>
+                @item.ToString();
+            </td>
+        </tr>
+    }
+
+</table>

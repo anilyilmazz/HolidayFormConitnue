@@ -1,0 +1,44 @@
+﻿@model HolidayViewModel
+
+@{
+    ViewData["Title"] = "HolidayEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>İzin Düzenle</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" onsubmit="return datecontrol()">
+            <h4>@ViewBag.createdate-@ViewBag.username </h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="StartDate"></label>
+                <input type="date" asp-for="StartDate" class="form-control" value="@ViewBag.startdate"/>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate"></label>
+                <input type="date" asp-for="EndDate" class="form-control" value="@ViewBag.enddate"/>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">İzni Düzenle</button>
+        </form>
+    </div>
+</div>
+<script>
+    function datecontrol() {
+        var startdate = document.getElementById("StartDate").value;
+        var enddate = document.getElementById("EndDate").value;
+        if (startdate > enddate) {
+            alert("İzin Bitiş Tarihi Daha Önce Olamaz");
+            return false;
+        } else {
+            alert("İzin Düzenlendi");
+            window.location.assign("/Holiday")
+        }
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Departman Yonetimi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+
+<br />
+<div class="container">
+    <a  class="btn btn-default" href="@Url.Action("DepartmentCreate","Admin")" style="float:right;">Departman Ekle</a>
+    <br />
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>Departman İsmi</th>
+                <th>Departman Yöneticisi</th>
+                <th>Sil</th>
+                <th>Düzenle</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "GetsDepartment",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "departmentName" },
+                { "data": "managerMail" },
+                {
+                  "title": "Sil",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("DepartmentDelete", "Admin")/' + veri + '">Sil</a>';
+                    }
+                },
+                {
+                  "title": "Düzenle",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("DepartmentEdit", "Admin")/' + veri + '">Düzenle</a>';
+                    }
+                },
+            ]
+        });
+    });
+
+</script> 

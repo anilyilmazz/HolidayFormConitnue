@@ -1,0 +1,48 @@
+@using Microsoft.AspNetCore.Identity
+@using IzinFormu.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                    <input type="button" class="btn btn-link navbar-btn navbar-link" value="Izin Islemleri" onclick="window.location.href='@Url.Action("Index","Holiday")'" />
+            </li>
+
+            @if (User.IsInRole("Admin"))
+    {
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Yonetici Islemleri
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a asp-area="" asp-controller="Admin" asp-action="UserIndex">Kullanici Yonetimi</a></li>
+                <li><a asp-area="" asp-controller="Admin" asp-action="HolidayIndex">Izin Yonetimi</a></li>
+                <li><a asp-area="" asp-controller="Admin" asp-action="DepartmentIndex">Departman Yonetimi</a></li>
+            </ul>
+        </li>
+
+}
+
+            <li>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hos Geldin @UserManager.GetUserName(User)</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Cikis Yap</button>
+            </li>
+        </ul>
+    </form>
+   
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @*<li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>*@
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Giris Yap</a></li>
+    </ul>
+}

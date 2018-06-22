@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-IzinFormu-3DCE989D-77C0-4546-A94A-6C7E6987BEB2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180621140510_migr3.cs" />
+    <Compile Remove="Data\Migrations\20180621140510_migr3.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180622051414_mig3.cs" />
+    <Compile Remove="Data\Migrations\20180622051414_mig3.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180622052624_migr3.cs" />
+    <Compile Remove="Data\Migrations\20180622052624_migr3.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180622053051_mig3.cs" />
+    <Compile Remove="Data\Migrations\20180622053051_mig3.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180622053231_mig3.cs" />
+    <Compile Remove="Data\Migrations\20180622053231_mig3.Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" PrivateAssets="All" />
+    <PackageReference Include="Select.HtmlToPdf" Version="18.3.1" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="18.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.1" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Rotativa\" />
+  </ItemGroup>
+
+</Project>

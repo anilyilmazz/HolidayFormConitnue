@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Kullanıcılar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+
+    <h2>Kullanıcılar</h2>
+    <a class="btn btn-default" href="@Url.Action("UserRegister","Admin")" style="float:right;">Kullanıcı Ekle</a>
+    <br />
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>İsim Soyisim</th>
+                <th>Yönetici</th>
+                <th>Email</th>
+                <th>Departman</th>
+                <th>İşe Giriş Tarihi</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tbody>
+            <td>@item.Name</td>
+            <td>@item.Manager</td>
+            <td>@item.Email</td>
+            <td>@item.Department</td>
+            <td>@item.CreateDate</td>
+            </tbody>
+        }
+    </table>
+</div>
