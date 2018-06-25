@@ -14,6 +14,7 @@
             </li>
 
             @if (User.IsInRole("DepartmentManager"))
+
     {
             <li>
                 <input type="button" class="btn btn-link navbar-btn navbar-link" value="Departman Islemleri" onclick="window.location.href='@Url.Action("Index","Department")'" />

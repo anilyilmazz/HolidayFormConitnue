@@ -64,6 +64,7 @@ namespace IzinFormu.Controllers
                 }
 
                 role = _rolemanager.FindByNameAsync("Admin").Result;
+               
 
             }
 
@@ -73,8 +74,9 @@ namespace IzinFormu.Controllers
             {
                 return Content("userroleresult Unsuccesful");
             }
-            
 
+            var userroleresult2 = _usermanager.RemoveFromRoleAsync(user, "DepartmentManager").Result;
+            var userroleresult3 = _usermanager.RemoveFromRoleAsync(user, "User").Result;
             return Content("OK");
 
         }

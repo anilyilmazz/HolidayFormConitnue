@@ -3,11 +3,16 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
 
 <h2>Departman Üyeleri</h2>
 
 <div class="container">
-    <a class="btn btn-default" href="@Url.Action("AddUser","Department",new { id=1007 })" style="float:right;">Kullanıcı Ekle</a>
+
+    <p style="float:right;">Departman Yöneticisi : @ViewBag.managermail</p>
+    <br />
+    <br />
+    <a class="btn btn-default" href="@Url.Action("AddUser","Department",new { id=ViewBag.Id })" style="float:right;">Kullanıcı Ekle</a>
     <table class="table table-bordered" id="example">
         <thead>
             <tr>
@@ -19,16 +24,10 @@
     </table>
 </div>
 <script>
-    function pdfcreate() {
-        alert("Pdf Oluşturuldu.")
-
-    }
-
-
     $(document).ready(function () {
         $('#example').DataTable({
             "ajax": {
-                "url": "Department/GetsDepartment/1007",
+                "url": "Department/GetsDepartment/@ViewBag.Id",
                 "dataSrc": ""
             },
             "columns": [
