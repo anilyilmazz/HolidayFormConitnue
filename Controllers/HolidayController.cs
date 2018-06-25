@@ -25,6 +25,26 @@ namespace IzinFormu.Controllers
             this._usermanager = _usermanager;
             this._ctx = _ctx;
         }
+        public string StatusGenerator(int status)
+        {
+            if (status == 0)
+            {
+                return "Onay Bekliyor";
+            }
+            else if (status == 1)
+            {
+                return "Onaylandı";
+            }else if( status == 2)
+            {
+                return "Yönetici Onaylamadı";
+            }
+            else
+            {
+                return "İznin durumu bozuk.";
+            }
+
+        }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -38,7 +58,7 @@ namespace IzinFormu.Controllers
         public JsonResult GetsMyHoliday()
         {
             ApplicationUser user = _usermanager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
-            var myholidaylist = _ctx.Holiday.Where(a => a.User.Id == user.Id).Select(s => new HolidayViewModel() { CreateDate = s.CreateDate, Department = s.Department, EndDate = s.EndDate, Manager = s.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id = s.Id ,StartDateString =s.StartDate.ToString("dd-MM-yyyy") ,EndDateString = s.EndDate.ToString("dd-MM-yyyy") ,CreateDateString =s.CreateDate.ToString("dd-MM-yyyy"),HolidayTime ="5"}).ToList();
+            var myholidaylist = _ctx.Holiday.Where(a => a.User.Id == user.Id).Select(s => new HolidayViewModel() { CreateDate = s.CreateDate, Department = s.Department, EndDate = s.EndDate, Manager = s.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id = s.Id ,StartDateString =s.StartDate.ToString("dd-MM-yyyy") ,EndDateString = s.EndDate.ToString("dd-MM-yyyy") ,CreateDateString =s.CreateDate.ToString("dd-MM-yyyy"),HolidayTime ="5",Status=StatusGenerator(s.Status)}).ToList();
             foreach (var i in myholidaylist)
             {
                 int holidaycount = -1;
@@ -114,6 +134,7 @@ namespace IzinFormu.Controllers
             holiday.Department = user.Department;
             holiday.Manager = user.Manager;
             holiday.User = user;
+            holiday.Status = 0;
 
             _ctx.Holiday.Add(holiday);
             _ctx.SaveChanges();

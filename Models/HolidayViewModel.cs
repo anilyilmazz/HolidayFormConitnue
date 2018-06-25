@@ -9,6 +9,11 @@ namespace IzinFormu.Models
     public class HolidayViewModel
     {
         [Required]
+        [Display(Name = "Durum")]
+        public string Status { get; set; }
+
+
+        [Required]
         [Display(Name = "İşe Giriş Tarihi")]
         public DateTime CreateDate { get; set; }
 

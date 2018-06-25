@@ -21,7 +21,6 @@ namespace IzinFormu.Controllers
         {
             this._usermanager = _usermanager;
             this._ctx = _ctx;
-            this._rolemanager = _rolemanager;
         }
 
         public void MakeUser(ApplicationUser user)
@@ -50,6 +49,8 @@ namespace IzinFormu.Controllers
 
             return View();
         }
+
+        [Authorize(Roles = "DepartmentManager")]
         public JsonResult GetsDepartment(int Id)
         {
             var departmentname = _ctx.Departman.Where(s => s.Id == Id).Select(s => new DepartmanViewModel() { DepartmentName = s.DepartmanName }).ToList();
@@ -65,6 +66,8 @@ namespace IzinFormu.Controllers
             }
             return Json(alldepartmanuserlist);
         }
+
+        [Authorize(Roles = "DepartmentManager")]
         public IActionResult AddUser()
         {
             var withoutmanagers = _ctx.Users.ToList();
@@ -78,6 +81,8 @@ namespace IzinFormu.Controllers
             ViewBag.users = withoutmanagers;
             return View();
         }
+
+        [Authorize(Roles = "DepartmentManager")]
         [HttpPost]
         public IActionResult AddUser(RegisterViewModel model,int Id) {
 
@@ -91,6 +96,8 @@ namespace IzinFormu.Controllers
             }
             return RedirectToAction("Index", "Department");
         }
+
+       [Authorize(Roles = "DepartmentManager")]
         public IActionResult DeleteUser(string Email)
         {
             var editinguser = _ctx.Users.SingleOrDefault(a => a.Email == Email);

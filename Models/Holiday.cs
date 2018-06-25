@@ -15,6 +15,7 @@ namespace IzinFormu.Models
         public DateTime RequestDate { get; set; }
         public string Department { get; set; }
         public string Manager { get; set; }
+        public int Status { get; set; }
         
     }
 }
