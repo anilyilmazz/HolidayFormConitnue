@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "Pendingholidays";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pendingholidays</h2>
+
+<br />
+
+<br />
+<div class="container">
+    <br />
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>Oluşturulma Tarihi</th>
+                <th>Isim</th>
+                <th>Departman</th>
+                <th>Departman Yöneticisi</th>
+                <th>İzin Başlangıç Tarihi</th>
+                <th>İzin Bitiş Tarihi</th>
+                <th>İzin Süresi</th>
+                <th>Onayla</th>
+                <th>Reddet</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "GetsPendingHolidays?holidayId=@ViewBag.departman",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "createDateString" },
+                { "data": "user" },
+                { "data": "department" },
+                { "data": "manager" },
+                { "data": "startDateString" },
+                { "data": "endDateString" },
+                { "data": "holidayTime" },
+                {
+                  "title": "Onayla",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("ConfirmHoliday", "Department")/' + veri + '">Onayla</a>';
+                    }
+                },
+                {
+                  "title": "Reddet",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("DenyHoliday", "Department")/' + veri + '">Reddet</a>';
+                    }
+                },
+            ]
+        });
+    });
+
+</script> 

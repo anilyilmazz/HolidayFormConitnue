@@ -39,7 +39,5 @@ namespace IzinFormu.Models.AccountViewModels
         [Display(Name = "İşe Giriş Tarihi")]
         public DateTime CreateDate { get; set; }
 
-
-
     }
 }

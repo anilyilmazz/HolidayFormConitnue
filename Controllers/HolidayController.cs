@@ -54,12 +54,10 @@ namespace IzinFormu.Controllers
             var myholidaylist = _ctx.Holiday.Where(a=>a.User.Id == user.Id).Select(s => new HolidayViewModel() { CreateDate = s.CreateDate, Department = s.Department, EndDate = s.EndDate, Manager = s.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id , Id = s.Id}).ToList();
             return View(myholidaylist);
         }
-        [Authorize]
-        public JsonResult GetsMyHoliday()
+
+        public List<HolidayViewModel> HolidayTime(List<HolidayViewModel> holidaylist)
         {
-            ApplicationUser user = _usermanager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
-            var myholidaylist = _ctx.Holiday.Where(a => a.User.Id == user.Id).Select(s => new HolidayViewModel() { CreateDate = s.CreateDate, Department = s.Department, EndDate = s.EndDate, Manager = s.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id = s.Id ,StartDateString =s.StartDate.ToString("dd-MM-yyyy") ,EndDateString = s.EndDate.ToString("dd-MM-yyyy") ,CreateDateString =s.CreateDate.ToString("dd-MM-yyyy"),HolidayTime ="5",Status=StatusGenerator(s.Status)}).ToList();
-            foreach (var i in myholidaylist)
+            foreach (var i in holidaylist)
             {
                 int holidaycount = -1;
                 int fridaycount = 0;
@@ -75,7 +73,15 @@ namespace IzinFormu.Controllers
                 i.HolidayTime = (holidaycount + fridaycount).ToString();
 
             }
-            return Json(myholidaylist);
+            return holidaylist;
+        }
+
+        [Authorize]
+        public JsonResult GetsMyHoliday()
+        {
+            ApplicationUser user = _usermanager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
+            var myholidaylist = _ctx.Holiday.Where(a => a.User.Id == user.Id).Select(s => new HolidayViewModel() { CreateDate = s.CreateDate, Department = s.Department, EndDate = s.EndDate, Manager = s.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id = s.Id ,StartDateString =s.StartDate.ToString("dd-MM-yyyy") ,EndDateString = s.EndDate.ToString("dd-MM-yyyy") ,CreateDateString =s.CreateDate.ToString("dd-MM-yyyy"),HolidayTime ="5",Status=StatusGenerator(s.Status)}).ToList();
+            return Json(HolidayTime(myholidaylist));
         }
 
         [Authorize]
