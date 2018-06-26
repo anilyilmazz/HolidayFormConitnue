@@ -4,5 +4,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ConfirmedHolidays</h2>
+<h2>Departman Yöneticisi Tarafından Onaylanmış Izinler</h2>
+<br />
+<br />
 
+<div class="container">
+    <br />
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>Oluşturulma Tarihi</th>
+                <th>Isim</th>
+                <th>Departman</th>
+                <th>Departman Yöneticisi</th>
+                <th>İzin Başlangıç Tarihi</th>
+                <th>İzin Bitiş Tarihi</th>
+                <th>İzin Süresi</th>
+                <th>Izin Durumu</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "GetsConfirmedHoliday?holidayId=@ViewBag.departman",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "createDateString" },
+                { "data": "user" },
+                { "data": "department" },
+                { "data": "manager" },
+                { "data": "startDateString" },
+                { "data": "endDateString" },
+                { "data": "holidayTime" },
+                { "data": "status" },
+            ]
+        });
+    });
+
+</script>

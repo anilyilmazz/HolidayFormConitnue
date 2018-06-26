@@ -9,8 +9,17 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <input type="button" class="btn btn-link navbar-btn navbar-link" value="Izin Islemleri" onclick="window.location.href='@Url.Action("Index","Holiday")'" />
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Izin Islemleri
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a asp-area="" asp-controller="Holiday" asp-action="HolidayRegister">Izin Olustur</a></li>
+                    <li><a asp-area="" asp-controller="Holiday" asp-action="MyPendingHolidays">Onay Bekleyen Izinler</a></li>
+                    <li><a asp-area="" asp-controller="Holiday" asp-action="MyConfirmedHolidays">Onaylanmis Izinler</a></li>
+                    <li><a asp-area="" asp-controller="Holiday" asp-action="MyDeniedHolidays">Onaylanmamis Izinler</a></li>
+                </ul>
             </li>
 
             @if (User.IsInRole("DepartmentManager"))
@@ -25,7 +34,14 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a asp-area="" asp-controller="Department" asp-action="Index">Departman Yonetimi</a></li>
-                <li><a asp-area="" asp-controller="Department" asp-action="PendingHolidays">Onay Bekleyen Izinler</a></li>
+                <li class="dropdown-submenu">
+                    <a class="test" href="#">Izin Yonetimi <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a asp-area="" asp-controller="Department" asp-action="PendingHolidays">Onay Bekleyen Izinler</a></li>
+                        <li><a asp-area="" asp-controller="Department" asp-action="ConfirmedHolidays">Onaylanmis Izinler</a></li>
+                        <li><a asp-area="" asp-controller="Department" asp-action="DeniedHolidays">Onaylanmamis Izinler</a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
 
@@ -56,7 +72,7 @@
             </li>
         </ul>
     </form>
-   
+
 }
 else
 {
@@ -65,3 +81,14 @@ else
         <li><a asp-area="" asp-controller="Account" asp-action="Login">Giris Yap</a></li>
     </ul>
 }
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-submenu a.test').on("click", function (e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
+

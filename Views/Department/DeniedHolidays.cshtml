@@ -3,6 +3,46 @@
     ViewData["Title"] = "DeniedHolidays";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>Düzenlemeye Gönderilmiş Izinler</h2>
+<br />
+<br />
 
-<h2>DeniedHolidays</h2>
+<div class="container">
+    <br />
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>Oluşturulma Tarihi</th>
+                <th>Isim</th>
+                <th>Departman</th>
+                <th>Departman Yöneticisi</th>
+                <th>İzin Başlangıç Tarihi</th>
+                <th>İzin Bitiş Tarihi</th>
+                <th>İzin Süresi</th>
+                <th>Izin Durumu</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "GetsDeniedHolidays?holidayId=@ViewBag.departman",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "createDateString" },
+                { "data": "user" },
+                { "data": "department" },
+                { "data": "manager" },
+                { "data": "startDateString" },
+                { "data": "endDateString" },
+                { "data": "holidayTime" },
+                {"data":"status"},
+            ]
+        });
+    });
 
+</script>

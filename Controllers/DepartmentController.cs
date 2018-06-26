@@ -132,6 +132,7 @@ namespace IzinFormu.Controllers
         }
 
         //HOLIDAY STATUS SYSTEM
+
         [Authorize(Roles = "DepartmentManager")]
         public IActionResult ConfirmHoliday(int Id)
         {

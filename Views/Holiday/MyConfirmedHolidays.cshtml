@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "MyConfirmedHolidays";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Onaylanmış Izinler</h3>
+<br />
+
+<div class="container">
+    <table class="table table-bordered" id="example">
+        <thead>
+            <tr>
+                <th>İzin Sahibi</th>
+                <th>İzin Başlangıç</th>
+                <th>İzin Bitiş</th>
+                <th>İzin Oluşturulan Tarih</th>
+                <th>İzin Süresi</th>
+                <th>İzin Durumu</th>
+                <th>Yazdır</th>
+                <th>Pdf</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "ajax": {
+                "url": "GetsMyConfirmedHolidays",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "user" },
+                { "data": "startDateString" },
+                { "data": "endDateString" },
+                { "data": "createDateString" },
+                { "data": "holidayTime" },
+                { "data": "status" },
+                {
+                  "title": "Yazdır",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a href="@Url.Action("GetHolidayHtml", "Holiday")/' + veri + '">Yazdır</a>';},
+                },
+                {
+                  "title": "Pdf",
+                  "data": "id",
+                  "searchable": false,
+                  "sortable": false,
+                    "render": function (data, type, row) {
+                        var veri = data;
+                        return '<a onclick="pdfcreate()" href="@Url.Action("GetHolidayPdf", "Holiday")/' + veri + '">Pdf</a>';},
+                },
+            ]
+        });
+    });
+
+</script> 

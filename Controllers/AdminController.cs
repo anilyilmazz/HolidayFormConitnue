@@ -34,6 +34,27 @@ namespace IzinFormu.Controllers
             return View();
         }
 
+        public string StatusGenerator(int status)
+        {
+            if (status == 0)
+            {
+                return "Onay Bekliyor";
+            }
+            else if (status == 1)
+            {
+                return "Onaylandı";
+            }
+            else if (status == 2)
+            {
+                return "Yönetici Onaylamadı";
+            }
+            else
+            {
+                return "İznin durumu bozuk.";
+            }
+
+        }
+
         //USER METHODS
         public void MakeUser(ApplicationUser user)
         {
@@ -82,7 +103,7 @@ namespace IzinFormu.Controllers
         }
         public JsonResult GetsHoliday()
         {
-            var allholidaylist = _ctx.Holiday.Select(s => new HolidayViewModel() {CreateDate = s.CreateDate, Department = s.User.Department, EndDate = s.EndDate, Manager = s.User.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id=s.Id , StartDateString = s.StartDate.ToString("dd-MM-yyyy"), EndDateString = s.EndDate.ToString("dd-MM-yyyy"), CreateDateString = s.CreateDate.ToString("dd-MM-yyyy") }).ToList();
+            var allholidaylist = _ctx.Holiday.Select(s => new HolidayViewModel() {CreateDate = s.CreateDate, Department = s.User.Department, EndDate = s.EndDate, Manager = s.User.Manager, RequestDate = s.RequestDate, StartDate = s.StartDate, User = s.User.Name, UserId = s.User.Id, Id=s.Id , StartDateString = s.StartDate.ToString("dd-MM-yyyy"), EndDateString = s.EndDate.ToString("dd-MM-yyyy"), CreateDateString = s.CreateDate.ToString("dd-MM-yyyy") ,Status =StatusGenerator(s.Status )}).ToList();
 
             foreach (var i in allholidaylist)
             {

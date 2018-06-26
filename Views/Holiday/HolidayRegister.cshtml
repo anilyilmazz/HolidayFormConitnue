@@ -7,10 +7,11 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" onsubmit="return datecontrol()">
-            <h4>İzin Oluştur</h4>
+            <h3>İzin Oluştur</h3>
             <hr />
+            <br />
             <div asp-validation-summary="All" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="StartDate"></label>
                 <input type="date" asp-for="StartDate" class="form-control" />

@@ -1,10 +1,11 @@
 ﻿
 @{
-    ViewData["Title"] = "Kullanıcı İzinleri";
+    ViewData["Title"] = "MyPendingHolidays";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Kullanıcı İzinleri</h2>
+<h3>Onay Bekleyen Izinler</h3>
+<br />
 
 <div class="container">
     <table class="table table-bordered" id="example">
@@ -25,7 +26,7 @@
     $(document).ready(function () {
         $('#example').DataTable({
             "ajax": {
-                "url": "GetsHoliday",
+                "url": "GetsMyPendingHolidays",
                 "dataSrc": ""
             },
             "columns": [
@@ -33,12 +34,10 @@
                 { "data": "startDateString" },
                 { "data": "endDateString" },
                 { "data": "createDateString" },
-                { "data": "holidayTime" },       
-                { "data": "status" },
-                
-                
+                { "data": "holidayTime" },
+                { "data": "status"},
             ]
         });
     });
-   
+
 </script> 
